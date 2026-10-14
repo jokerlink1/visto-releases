@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VISTO Pf e VISTO Ag — avaliação de atitudes em sala de aula</title>
+<link rel="icon" href="icone_pf.png">
+<meta name="description" content="VISTO: avaliação de atitudes e comportamento aula a aula, fichas e trabalhos, autoavaliação, horário e app Android. Para professores e agrupamentos de escolas.">
+<style>
+:root{--bg:#f4f0e7;--bg2:#ebe4d6;--panel:#fbf9f4;--line:#d9cfbd;--text:#221f1a;--muted:#6c6455;--acc:#c81e64;--acc-d:#9e1650;
+  --azul:#0b7493;--verde:#3f7d0f;--ouro:#a87400;--roxo:#6d3fc4;--l1:#cf2a43;--l2:#d9611a;--l3:#b88a00;--l4:#1b82b8;--l5:#178f58}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+a{color:var(--acc)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:5;background:rgba(244,240,231,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:18px;height:60px}
+.logo{font-weight:800;font-size:21px;letter-spacing:.3px;color:var(--text);text-decoration:none}
+.logo b{color:var(--acc)}
+nav.menu{margin-left:auto;display:flex;gap:18px;font-size:14.5px;font-weight:600}
+nav.menu a{color:var(--muted);text-decoration:none}
+nav.menu a:hover{color:var(--acc)}
+.hero>div{min-width:0}
+.hero{padding:64px 0 40px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.hero h1{font-size:44px;line-height:1.08;margin:0 0 16px;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p.lead{font-size:18.5px;color:var(--muted);margin:0 0 26px;max-width:540px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:13px 20px;font-weight:700;text-decoration:none;border:1px solid transparent;font-size:15.5px}
+.btn.pri{background:var(--acc);color:#fff}.btn.pri:hover{background:var(--acc-d)}
+.btn.sec{background:var(--panel);border-color:var(--line);color:var(--text)}.btn.sec:hover{border-color:var(--acc)}
+.versao{margin-top:14px;font-size:13.5px;color:var(--muted)}
+/* grelha de exemplo (desenhada, sem dados reais) */
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 18px 40px -24px rgba(60,40,10,.35)}
+.demo .t{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.demo .t b{font-size:15px}.demo .t span{font-size:12px;color:var(--muted)}
+.linha{display:grid;grid-template-columns:72px repeat(5,minmax(0,1fr));gap:6px;align-items:center;margin:6px 0}
+.linha .n{font-size:13px;color:var(--muted)}
+.linha .c{height:22px;border-radius:6px;background:var(--bg2)}
+.cab{font-size:10.5px;font-weight:800;color:var(--muted);text-align:center;letter-spacing:.3px}
+.leg{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--muted)}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+section{padding:46px 0}
+section h2{font-size:30px;margin:0 0 8px;letter-spacing:-.3px}
+section .sub{color:var(--muted);margin:0 0 26px;max-width:720px}
+.prod{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.card h3{margin:0 0 6px;font-size:20px}
+.card .tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.tag.p{background:#f8dde8;color:var(--acc)}.tag.a{background:#dcecf2;color:var(--azul)}
+.card ul{margin:10px 0 18px;padding-left:20px}.card li{margin:4px 0}
+.func{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.f{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+.f .ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;margin-bottom:10px}
+.f h4{margin:0 0 4px;font-size:16px}.f p{margin:0;color:var(--muted);font-size:14.5px}
+.dl{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.dl a{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-decoration:none;color:var(--text)}
+.dl a:hover{border-color:var(--acc)}
+.dl .ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex:none}
+.dl b{display:block}.dl small{color:var(--muted)}
+.passos{counter-reset:p;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.passo{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.passo:before{counter-increment:p;content:counter(p);display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;align-items:center;justify-content:center;margin-bottom:8px}
+.passo h4{margin:0 0 4px}.passo p{margin:0;color:var(--muted);font-size:14.5px}
+.seg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 28px;margin:0;padding:0;list-style:none}
+.seg li{padding-left:28px;position:relative}
+.seg li:before{content:"✓";position:absolute;left:0;top:0;color:var(--verde);font-weight:800}
+.notas{white-space:pre-wrap;font-size:14.5px;color:var(--muted);margin:10px 0 0}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+summary{font-weight:700;cursor:pointer}
+details p{margin:8px 0 2px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:14px}
+@media (max-width:860px){.cab{font-size:8.5px;overflow:hidden}.hero{grid-template-columns:minmax(0,1fr);padding-top:36px}.hero h1{font-size:34px}.prod,.dl,.passos{grid-template-columns:1fr}
+  .func{grid-template-columns:1fr 1fr}.seg{grid-template-columns:1fr}nav.menu{display:none}}
+@media (max-width:520px){.func{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="#"><b>✓</b> VISTO</a>
+  <nav class="menu"><a href="#programas">Programas</a><a href="#funcionalidades">Funcionalidades</a><a href="#descarregar">Descarregar</a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a></nav>
+</div></header>
+
+<main class="wrap">
+<div class="hero">
+  <div>
+    <h1>Avaliar atitudes <em>aula a aula</em>, sem papéis.</h1>
+    <p class="lead">O VISTO regista a pontualidade, a atenção, a participação e o empenho de cada aluno em cada aula, junta as fichas e os
+      trabalhos e calcula a nota, a síntese e o relatório para o encarregado de educação.</p>
+    <div class="btns">
+      <a class="btn pri" href="#descarregar">⬇ Descarregar</a>
+      <a class="btn sec" href="#programas">Conhecer os programas</a>
+    </div>
+    <div class="versao" id="versao">A ler a versão mais recente…</div>
+  </div>
+  <div class="demo" aria-label="Exemplo ilustrativo da grelha de avaliação de uma aula">
+    <div class="t"><b>Aula 12 · 10.º A</b><span>exemplo ilustrativo</span></div>
+    <div class="linha"><span></span><span class="cab">PONTUAL</span><span class="cab">ATENTO</span><span class="cab">PARTICIP.</span><span class="cab">EMPENHO</span><span class="cab">FICHAS</span></div>
+    <div id="grelha"></div>
+    <div class="leg"><span><i style="background:var(--l1)"></i>1 Mau</span><span><i style="background:var(--l2)"></i>2 Insuf.</span><span><i style="background:var(--l3)"></i>3 Suf.</span><span><i style="background:var(--l4)"></i>4 Bom</span><span><i style="background:var(--l5)"></i>5 Muito Bom</span></div>
+  </div>
+</div>
+
+<section id="programas">
+  <h2>Dois programas, a mesma forma de trabalhar</h2>
+  <p class="sub">Escolha o que serve melhor: só no seu computador, ou com conta no servidor do agrupamento e sincronização entre computadores e telemóvel.</p>
+  <div class="prod">
+    <div class="card"><span class="tag p">Para o professor</span><h3><img src="icone_pf.png" alt="" width="40" height="40" style="vertical-align:-11px;margin-right:8px;border-radius:9px">VISTO Pf</h3>
+      <p>Tudo no seu computador (Windows), sem contas nem servidores. O telemóvel liga-se ao computador pela rede da escola ou pela Internet.</p>
+      <ul><li>Funciona sem Internet</li><li>Os dados ficam no seu computador</li><li>App Android para avaliar na sala de professores</li><li>Período de experiência de 30 dias</li></ul>
+      <a class="btn pri" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf_Setup.exe">⬇ VISTO Pf para Windows</a></div>
+    <div class="card"><span class="tag a">Para o agrupamento</span><h3><img src="icone_ag.png" alt="" width="40" height="40" style="vertical-align:-11px;margin-right:8px;border-radius:9px">VISTO Ag</h3>
+      <p>Conta para cada professor no servidor do agrupamento: os dados sincronizam sozinhos entre computadores e com a app, e a direção gere as contas.</p>
+      <ul><li>Trabalha também sem rede (envia depois)</li><li>Painel da direção: contas, escolas, cursos, resumos sem nomes de alunos</li><li>Apoio aos colegas com aviso e registo</li><li>Logotipos do agrupamento em todos os PDF</li></ul>
+      <a class="btn pri" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Ag_Setup.exe">⬇ VISTO Ag para Windows</a></div>
+  </div>
+</section>
+
+<section id="funcionalidades">
+  <h2>O que faz</h2>
+  <p class="sub">Pensado para o dia a dia do professor — do ensino básico aos cursos profissionais.</p>
+  <div class="func" id="func"></div>
+</section>
+
+<section id="descarregar">
+  <h2>Descarregar</h2>
+  <p class="sub">Versão mais recente, sempre a partir deste endereço. Depois de instalado, o programa <b>atualiza-se sozinho</b> (ao abrir e de 6 em 6 horas) sem mexer nos seus dados.</p>
+  <div class="dl">
+    <a href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf_Setup.exe"><span class="ico" style="background:var(--acc)">✓</span><span><b>VISTO Pf — Windows</b><small id="t-VISTO_Pf_Setup.exe">instalador (.exe)</small></span></a>
+    <a href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Ag_Setup.exe"><span class="ico" style="background:var(--azul)">✓</span><span><b>VISTO Ag — Windows</b><small id="t-VISTO_Ag_Setup.exe">instalador (.exe)</small></span></a>
+    <a href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf.apk"><span class="ico" style="background:var(--verde)">▣</span><span><b>App Android do VISTO Pf</b><small id="t-VISTO_Pf.apk">liga-se ao seu computador (.apk)</small></span></a>
+    <a href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Ag.apk"><span class="ico" style="background:var(--roxo)">▣</span><span><b>App Android do VISTO Ag</b><small id="t-VISTO_Ag.apk">entra com a sua conta (.apk)</small></span></a>
+  </div>
+  <div class="passos" style="margin-top:22px">
+    <div class="passo"><h4>Instalar</h4><p>Execute o instalador. Se o Windows avisar que o programa «não é reconhecido»: «Mais informações» → «Executar mesmo assim».</p></div>
+    <div class="passo"><h4>Ativar a licença</h4><p>Em Definições → Dados → Licença cole a chave que recebeu. Sem chave, o VISTO Pf funciona 30 dias em experiência.</p></div>
+    <div class="passo"><h4>Ligar o telemóvel</h4><p>Em Definições → Telemóvel aparece um código QR: leia-o no telemóvel, instale a app e escreva o PIN.</p></div>
+  </div>
+  <details id="novidades"><summary>Novidades da versão mais recente</summary><p class="notas" id="notas">—</p></details>
+</section>
+
+<section id="seguranca">
+  <h2>Segurança e dados dos alunos</h2>
+  <p class="sub">Os dados dos alunos são da escola. O VISTO foi desenhado para os proteger.</p>
+  <ul class="seg">
+    <li>Cada professor vê apenas os seus dados; a direção gere contas sem ver avaliações nem nomes de alunos.</li>
+    <li>Palavras-passe guardadas com PBKDF2 e bloqueio de tentativas; ligações por HTTPS.</li>
+    <li>O apoio técnico a um colega fica sempre registado e o colega é avisado.</li>
+    <li>A app do telemóvel liga-se com PIN; pela Internet usa um túnel seguro (HTTPS).</li>
+    <li>As atualizações são verificadas (SHA-256) antes de serem instaladas.</li>
+    <li>Os dados nunca são apagados por falta de licença: podem sempre ser consultados e exportados.</li>
+  </ul>
+</section>
+
+<section id="perguntas">
+  <h2>Perguntas frequentes</h2>
+  <details><summary>Preciso de Internet?</summary><p>Não para trabalhar. O VISTO Pf e o VISTO Ag gravam tudo no computador; a Internet só é usada para atualizações, para confirmar a licença (de vez em quando) e, se quiser, para a app do telemóvel fora da escola.</p></details>
+  <details><summary>Funciona com cursos profissionais?</summary><p>Sim: módulos, UFCD e UC, autoavaliação no fim de cada módulo, aulas não dadas com reposição e antecipação, e aviso das aulas que faltam até à data limite.</p></details>
+  <details><summary>Posso experimentar antes de comprar?</summary><p>Sim. O VISTO Pf funciona durante 30 dias sem chave. Depois, sem licença, abre em modo de consulta: vê, imprime e exporta os seus dados, mas não grava alterações.</p></details>
+  <details><summary>Como obtenho uma licença ou o VISTO Ag para o meu agrupamento?</summary><p id="contacto">Contacte o autor do VISTO.</p></details>
+  <details><summary>O código do programa está disponível?</summary><p>Não. Esta página distribui apenas os instaladores e as apps.</p></details>
+</section>
+</main>
+<footer><div class="wrap">✓ VISTO · avaliação de atitudes em sala de aula · <span id="rodape-versao"></span></div></footer>
+
+<script>
+"use strict";
+const REPO = "jokerlink1/visto-releases";
+const CONTACTO = "";        // ex.: "licencas@exemplo.pt" — aparece nas perguntas frequentes
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// grelha ilustrativa (valores inventados)
+const cores = ["", "var(--l1)", "var(--l2)", "var(--l3)", "var(--l4)", "var(--l5)"];
+const linhas = [["Aluno 1", [5,4,4,5,5]], ["Aluno 2", [4,3,4,4,3]], ["Aluno 3", [5,5,5,4,5]], ["Aluno 4", [3,2,3,3,2]], ["Aluno 5", [4,4,5,4,4]]];
+document.getElementById("grelha").innerHTML = linhas.map(([n, v]) =>
+  `<div class="linha"><span class="n">${n}</span>${v.map(k => `<span class="c" style="background:${cores[k]}"></span>`).join("")}</div>`).join("");
+const F = [
+  ["◉", "var(--acc)", "Avaliação aula a aula", "Parâmetros de 1 a 5 com um clique (ou pelo teclado), faltas, observações e «vazios → Bom»."],
+  ["✎", "#5b4fd6", "Fichas e trabalhos", "Entrega, uso de IA e defesa; anexe o enunciado (PDF/Word): as questões e cotações são identificadas sozinhas."],
+  ["▦", "var(--azul)", "Notas e relatórios", "Nota final, síntese para o encarregado de educação, relatório geral e completo do aluno em PDF."],
+  ["☺", "var(--roxo)", "Autoavaliação", "Aluno a aluno no fim do período ou de cada módulo — também no telemóvel."],
+  ["◷", "#0f8f8a", "Horário e «Hoje»", "Horário semanal, alterações só num dia, post-it com as aulas do dia e a hora de início e de fim."],
+  ["▤", "var(--ouro)", "Sumários", "Livro de sumários em PDF; copie os sumários para colar na plataforma da escola."],
+  ["⚑", "var(--l2)", "Aulas não dadas", "Registe a falta; nos cursos profissionais reponha ou antecipe e veja o que falta até à data limite."],
+  ["▣", "var(--verde)", "App Android", "Hoje, turmas, alunos, avaliar uma aula, autoavaliação e «não dei a aula» — mesmo sem rede."],
+  ["⇩", "var(--muted)", "Importação", "Alunos, aulas e sumários a partir de Excel, CSV ou Word; fotografias por pasta ou .zip."]];
+document.getElementById("func").innerHTML = F.map(([i, c, t, d]) =>
+  `<div class="f"><div class="ic" style="background:${c}">${i}</div><h4>${t}</h4><p>${d}</p></div>`).join("");
+if (CONTACTO) document.getElementById("contacto").innerHTML = `Escreva para <a href="mailto:${esc(CONTACTO)}">${esc(CONTACTO)}</a>.`;
+// versão mais recente (API pública do GitHub)
+const mb = n => (n / 1048576).toFixed(n > 10485760 ? 0 : 1).replace(".", ",") + " MB";
+fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {headers: {"Accept": "application/vnd.github+json"}})
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(j => {
+    const d = new Date(j.published_at).toLocaleDateString("pt-PT", {day: "numeric", month: "long", year: "numeric"});
+    document.getElementById("versao").textContent = `Versão ${j.name || j.tag_name} · publicada a ${d}`;
+    document.getElementById("rodape-versao").textContent = `versão ${j.name || j.tag_name}`;
+    for (const a of j.assets || []){
+      const el = document.getElementById("t-" + a.name);
+      if (el) el.textContent += " · " + mb(a.size);
+    }
+    if (j.body) document.getElementById("notas").textContent = j.body;
+  })
+  .catch(() => { document.getElementById("versao").textContent = "Versão mais recente na página de Releases."; document.getElementById("novidades").style.display = "none"; });
+</script>
+</body>
+</html>
