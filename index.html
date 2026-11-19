@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VISTO — da aula à nota</title>
+<meta name="description" content="VISTO Pf e VISTO Ag: avaliação aula a aula, elementos de avaliação por domínios e critérios, autoavaliação e relatórios — para professores do ensino básico, secundário e profissional.">
+<link rel="icon" href="icone_pf.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#f6f8fc; --grelha:#dfe6f3; --folha:#ffffff; --tinta:#1f2f5c; --tinta2:#4a5878; --tenue:#7b86a0;
+  --vermelho:#c8322b; --linha:#cfd8ea;
+  --n1:#c62f45; --n2:#d4651c; --n3:#b38600; --n4:#1d7fb8; --n5:#1a8a57;
+  --raio:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;color:var(--tinta);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;
+  background-color:var(--papel);
+  background-image:linear-gradient(var(--grelha) 1px,transparent 1px),linear-gradient(90deg,var(--grelha) 1px,transparent 1px);
+  background-size:26px 26px}
+a{color:var(--tinta);text-decoration-color:var(--vermelho);text-underline-offset:3px}
+a:hover{color:var(--vermelho)}
+:focus-visible{outline:3px solid var(--vermelho);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.01em;line-height:1.1;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.estreito{max-width:68ch}
+
+/* topo */
+header.topo{position:sticky;top:0;z-index:10;background:rgba(246,248,252,.94);backdrop-filter:blur(6px);border-bottom:2px solid var(--tinta)}
+header.topo .wrap{display:flex;align-items:center;gap:22px;height:62px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 22px "Bricolage Grotesque",sans-serif;color:var(--tinta)}
+.marca svg{width:30px;height:30px}
+nav.menu{display:flex;gap:20px;margin-left:auto;font-weight:700;font-size:15px}
+nav.menu a{text-decoration:none;color:var(--tinta2)}
+nav.menu a:hover{color:var(--vermelho)}
+.botao{display:inline-flex;align-items:center;gap:8px;border-radius:var(--raio);padding:12px 20px;font-weight:700;text-decoration:none;border:2px solid var(--tinta);font-size:16px;line-height:1.2}
+.botao.cheio{background:var(--tinta);color:#fff}
+.botao.cheio:hover{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+.botao.vazio{background:var(--folha);color:var(--tinta)}
+.botao.vazio:hover{border-color:var(--vermelho);color:var(--vermelho)}
+header.topo .botao{padding:8px 14px;font-size:14.5px}
+
+/* abertura */
+.abertura{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:start;padding:64px 0 56px}
+.abertura h1{font-size:clamp(40px,6vw,68px);font-weight:800;margin-bottom:22px}
+.abertura .lead{font-size:20px;color:var(--tinta2);margin:0 0 30px;max-width:30em}
+.abertura .acoes{display:flex;gap:12px;flex-wrap:wrap}
+.versao{margin-top:16px;font-size:14.5px;color:var(--tenue)}
+
+/* demo: rubrica que se pode clicar */
+.demo{position:relative;background:var(--folha);border:2px solid var(--tinta);border-radius:14px;padding:22px 22px 18px;box-shadow:8px 8px 0 var(--tinta)}
+.demo h2{font-size:19px;margin-bottom:2px}
+.demo .nota-demo{font-size:14px;color:var(--tenue);margin:0 0 16px}
+.dom{border-top:1px dashed var(--linha);padding:12px 0 10px}
+.dom:first-of-type{border-top:0;padding-top:4px}
+.dom .cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.dom .cab b{font-size:15.5px}
+.dom .cab span{font-size:14px;color:var(--tinta2);white-space:nowrap}
+.elem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;margin:6px 0}
+.elem .nome{font-size:14.5px;color:var(--tinta2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.niveis{display:flex;gap:4px}
+.niveis button{width:34px;height:30px;border-radius:7px;border:2px solid var(--linha);background:var(--folha);font:700 13px "Atkinson Hyperlegible",sans-serif;color:var(--tenue);cursor:pointer}
+.niveis button:hover{border-color:var(--tinta)}
+.niveis button[aria-pressed="true"]{color:#fff;border-color:transparent}
+.niveis button[data-n="1"][aria-pressed="true"]{background:var(--n1)}
+.niveis button[data-n="2"][aria-pressed="true"]{background:var(--n2)}
+.niveis button[data-n="3"][aria-pressed="true"]{background:var(--n3)}
+.niveis button[data-n="4"][aria-pressed="true"]{background:var(--n4)}
+.niveis button[data-n="5"][aria-pressed="true"]{background:var(--n5)}
+.resultado{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:2px solid var(--tinta);margin-top:10px;padding-top:14px}
+.resultado .conta{font-size:14px;color:var(--tinta2);line-height:1.45}
+.resultado .final{display:flex;align-items:center;gap:12px}
+.circulo{width:68px;height:68px;border-radius:50%;border:4px solid var(--n4);display:flex;align-items:center;justify-content:center;font:800 32px "Bricolage Grotesque",sans-serif;transition:border-color .25s}
+.mencao{font-weight:700;font-size:15px}
+.visto{position:absolute;right:-14px;top:-26px;font:600 34px "Caveat",cursive;color:var(--vermelho);transform:rotate(-8deg);pointer-events:none;display:flex;align-items:center;gap:2px}
+.visto svg{width:40px;height:34px}
+.visto.marca-nova{animation:carimbo .45s ease-out}
+@keyframes carimbo{0%{opacity:0;transform:rotate(-8deg) scale(1.4)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+
+/* secções */
+section.bloco{padding:64px 0;border-top:2px solid var(--tinta)}
+section.bloco>.wrap>h2,.ref h2{font-size:clamp(30px,4vw,42px);font-weight:800;margin-bottom:10px}
+.intro{font-size:18.5px;color:var(--tinta2);margin:0 0 34px;max-width:40em}
+
+/* comparação dos programas */
+table.comparar{width:100%;border-collapse:collapse;background:var(--folha);border:2px solid var(--tinta);border-radius:12px;overflow:hidden;font-size:16px}
+table.comparar th,table.comparar td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
+table.comparar thead th{font:700 18px "Bricolage Grotesque",sans-serif;background:var(--tinta);color:#fff;border-bottom:0}
+table.comparar thead th small{display:block;font:400 14px "Atkinson Hyperlegible",sans-serif;opacity:.85}
+table.comparar td.sim{color:var(--n5);font-weight:700;width:18%}
+table.comparar td.nao{color:var(--tenue);width:18%}
+table.comparar tr:last-child td{border-bottom:0}
+.tabela-rolo{overflow-x:auto}
+
+/* o dia do professor: sequência real */
+.dia{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:2px solid var(--tinta);border-radius:14px;background:var(--folha);overflow:hidden}
+.momento{padding:24px 24px 26px;border-right:2px solid var(--tinta)}
+.momento:last-child{border-right:0}
+.momento h3{font-size:23px;margin-bottom:4px}
+.momento .quando{color:var(--vermelho);font-weight:700;font-size:15px;margin:0 0 14px}
+.momento ul{margin:0;padding:0;list-style:none}
+.momento li{padding:10px 0;border-top:1px dashed var(--linha)}
+.momento li:first-child{border-top:0;padding-top:0}
+.momento li b{display:block;font-size:16.5px}
+.momento li span{color:var(--tinta2);font-size:15.5px}
+
+/* referencial */
+.ref{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:start}
+.ref p{margin:0 0 14px;max-width:62ch}
+.escala{background:var(--folha);border:2px solid var(--tinta);border-radius:12px;padding:18px 20px}
+.escala h3{font-size:18px;margin-bottom:10px}
+.escala ol{list-style:none;margin:0;padding:0}
+.escala li{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 0;border-top:1px dashed var(--linha);font-size:15.5px}
+.escala li:first-child{border-top:0}
+.escala .q{width:22px;height:22px;border-radius:6px}
+.escala .v{color:var(--tinta2);white-space:nowrap}
+.escala .rodape{font-size:14px;color:var(--tenue);margin:10px 0 0}
+
+/* descarregar */
+.descargas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:34px}
+.descarga{display:flex;align-items:center;gap:16px;background:var(--folha);border:2px solid var(--tinta);border-radius:12px;padding:16px 18px;text-decoration:none;color:var(--tinta)}
+.descarga:hover{border-color:var(--vermelho);color:var(--tinta)}
+.descarga img{width:46px;height:46px;border-radius:10px;flex:none}
+.descarga .tel{width:46px;height:46px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--papel);border:2px solid var(--linha);font-size:22px}
+.descarga b{display:block;font-size:17px}
+.descarga small{color:var(--tinta2);font-size:14.5px}
+ol.passos{counter-reset:passo;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+ol.passos li{counter-increment:passo;position:relative;padding-left:52px}
+ol.passos li:before{content:counter(passo);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;border:2px solid var(--tinta);display:flex;align-items:center;justify-content:center;font:800 18px "Bricolage Grotesque",sans-serif;background:var(--folha)}
+ol.passos b{display:block;font-size:17px;margin-bottom:2px}
+ol.passos span{color:var(--tinta2);font-size:15.5px}
+details.novidades{margin-top:34px;background:var(--folha);border:2px solid var(--tinta);border-radius:12px;padding:14px 18px}
+details.novidades summary{font-weight:700;cursor:pointer}
+#notas{white-space:pre-wrap;font-size:15px;color:var(--tinta2);margin:12px 0 0;max-height:420px;overflow:auto}
+
+/* segurança */
+ul.garantias{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 40px;max-width:980px}
+ul.garantias li{position:relative;padding:10px 0 10px 34px;border-top:1px dashed var(--linha)}
+ul.garantias li:before{content:"";position:absolute;left:4px;top:15px;width:16px;height:9px;border-left:3px solid var(--n5);border-bottom:3px solid var(--n5);transform:rotate(-45deg)}
+
+/* perguntas */
+.perguntas details{background:var(--folha);border:2px solid var(--tinta);border-radius:12px;padding:14px 18px;margin:0 0 10px;max-width:820px}
+.perguntas summary{font-weight:700;cursor:pointer;font-size:17px}
+.perguntas details p{margin:10px 0 2px;color:var(--tinta2)}
+
+footer{border-top:2px solid var(--tinta);padding:28px 0 46px;color:var(--tinta2);font-size:15px;background:var(--papel)}
+footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+
+@media (max-width:920px){
+  nav.menu{display:none}
+  .abertura{grid-template-columns:minmax(0,1fr);gap:40px;padding-top:40px}
+  .demo{box-shadow:5px 5px 0 var(--tinta)}
+  .visto{right:4px}
+  .dia{grid-template-columns:minmax(0,1fr)}
+  .momento{border-right:0;border-bottom:2px solid var(--tinta)}
+  .momento:last-child{border-bottom:0}
+  .ref{grid-template-columns:minmax(0,1fr)}
+  .descargas,ol.passos,ul.garantias{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:480px){
+  body{font-size:16px}
+  .wrap{padding-left:16px;padding-right:16px}
+  header.topo .botao{display:none}
+  .niveis button{width:28px;height:28px}
+  .elem{grid-template-columns:minmax(0,1fr)}
+  table.comparar th,table.comparar td{padding:10px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="#1f2f5c"/><path d="M7.5 15.5l5 5L23 9.5" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      VISTO
+    </a>
+    <nav class="menu" aria-label="Secções">
+      <a href="#programas">Programas</a>
+      <a href="#o-que-faz">O que faz</a>
+      <a href="#referencial">Avaliação</a>
+      <a href="#descarregar">Descarregar</a>
+      <a href="#seguranca">Segurança</a>
+      <a href="#perguntas">Perguntas</a>
+    </nav>
+    <a class="botao cheio" href="#descarregar">Descarregar</a>
+  </div>
+</header>
+
+<main>
+<div class="wrap abertura">
+  <div>
+    <h1>Da aula à nota, com critério.</h1>
+    <p class="lead">O VISTO regista as atitudes de cada aluno aula a aula, junta as fichas, os trabalhos e as apresentações
+      como elementos de avaliação por domínios e critérios, e calcula a nota, a síntese para o encarregado de educação e o
+      relatório final — de acordo com o referencial de avaliação do agrupamento.</p>
+    <div class="acoes">
+      <a class="botao cheio" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf_Setup.exe">Descarregar o VISTO Pf</a>
+      <a class="botao vazio" href="#programas">Comparar com o VISTO Ag</a>
+    </div>
+    <p class="versao" id="versao">A ler a versão mais recente…</p>
+  </div>
+
+  <div class="demo" aria-labelledby="demo-titulo">
+    <div class="visto" id="visto" aria-hidden="true">
+      <svg viewBox="0 0 40 34"><path d="M3 18c4 3 7 7 9 11C16 18 24 8 37 3" fill="none" stroke="#c8322b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>visto
+    </div>
+    <h2 id="demo-titulo">Experimente: clique nos níveis</h2>
+    <p class="nota-demo">Exemplo inventado de um aluno de TIC, 5.º ano. Cada domínio é a média dos seus elementos; a nota pesa os domínios.</p>
+    <div id="dominios"></div>
+    <div class="resultado">
+      <p class="conta" id="conta"></p>
+      <div class="final" aria-live="polite">
+        <div class="circulo" id="circulo">4</div>
+        <span class="mencao" id="mencao">Bom</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="bloco" id="programas">
+  <div class="wrap">
+    <h2>Dois programas, a mesma forma de trabalhar</h2>
+    <p class="intro">O VISTO Pf trabalha só no seu computador. O VISTO Ag dá uma conta a cada professor no servidor do
+      agrupamento e sincroniza entre computadores e telemóvel.</p>
+    <div class="tabela-rolo">
+    <table class="comparar">
+      <thead><tr><th scope="col"></th><th scope="col">VISTO Pf<small>para o professor</small></th><th scope="col">VISTO Ag<small>para o agrupamento</small></th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Avaliação aula a aula, elementos de avaliação, autoavaliação e relatórios</th><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+        <tr><th scope="row">Funciona sem Internet</th><td class="sim">Sim</td><td class="sim">Sim (envia depois)</td></tr>
+        <tr><th scope="row">Onde ficam os dados</th><td class="sim">No seu computador</td><td class="sim">No computador e no servidor da escola</td></tr>
+        <tr><th scope="row">App Android</th><td class="sim">Liga-se ao seu computador</td><td class="sim">Entra com a sua conta</td></tr>
+        <tr><th scope="row">Vários computadores com os mesmos dados</th><td class="nao">Não</td><td class="sim">Sim</td></tr>
+        <tr><th scope="row">Painel da direção, medidas de suporte partilhadas, logotipos do agrupamento</th><td class="nao">Não</td><td class="sim">Sim</td></tr>
+        <tr><th scope="row">Secretaria, biblioteca, bar, ponto e kits de primeiros socorros</th><td class="nao">Não</td><td class="sim">Sim</td></tr>
+        <tr><th scope="row">Experimentar sem chave</th><td class="sim">30 dias</td><td class="nao">Com o agrupamento</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="o-que-faz">
+  <div class="wrap">
+    <h2>O que faz, ao longo do período</h2>
+    <p class="intro">Pensado para o dia a dia do professor — do 5.º ano aos cursos profissionais, com módulos, UFCD e escala de 0 a 20.</p>
+    <div class="dia">
+      <div class="momento">
+        <h3>Na aula</h3>
+        <p class="quando">Com o computador ou o telemóvel</p>
+        <ul>
+          <li><b>Atitudes num clique</b><span>Pontualidade, atenção, participação, empenho… de 1 a 5, pelo rato ou pelo teclado. São informação formativa.</span></li>
+          <li><b>Critérios quando a aula conta para a nota</b><span>Se a aula tem uma ficha, um trabalho ou uma apresentação, os critérios aparecem na mesma grelha.</span></li>
+          <li><b>«Hoje» e o horário</b><span>As aulas do dia, a sala e a hora, e o aviso de quantas aulas faltam até ao reporte.</span></li>
+          <li><b>Sumários</b><span>Planificados por módulo ou semestre; numa greve passam para as aulas seguintes. Copiam-se para a plataforma da escola e saem num livro em PDF.</span></li>
+        </ul>
+      </div>
+      <div class="momento">
+        <h3>Depois da aula</h3>
+        <p class="quando">Fichas, trabalhos e elementos de avaliação</p>
+        <ul>
+          <li><b>Fichas com matriz de correção</b><span>Anexe o enunciado; as questões, as cotações, os domínios e os critérios de cada questão são lidos da matriz.</span></li>
+          <li><b>Defesa e uso de IA</b><span>Registe se o aluno defendeu o trabalho. O que não foi defendido fica assinalado e é o professor que decide se conta.</span></li>
+          <li><b>Domínios, subdomínios e critérios</b><span>Cada elemento conta nos domínios e subdomínios que avalia, com os pesos aprovados pelo grupo disciplinar.</span></li>
+          <li><b>Copiar entre turmas</b><span>Os elementos e as fichas passam para outra turma, na aula dessa turma mais próxima da data.</span></li>
+        </ul>
+      </div>
+      <div class="momento">
+        <h3>No fim do período</h3>
+        <p class="quando">Reportes, semestres e módulos</p>
+        <ul>
+          <li><b>Autoavaliação reporte a reporte</b><span>No computador, em modo aluno, ou no telemóvel. Os avisos mudam de vermelho para laranja e verde à medida que os alunos a fazem.</span></li>
+          <li><b>Grelha de avaliação e pauta</b><span>Cada rubrica com os domínios que avaliou, as médias, o total e a nota final, em PDF com os logotipos da escola.</span></li>
+          <li><b>Relatório final e síntese</b><span>O cálculo da nota de cada aluno, domínio a domínio, e a mensagem para o encarregado de educação.</span></li>
+          <li><b>Plano do período</b><span>Um semáforo mostra se cada domínio já tem elementos suficientes antes de chegar ao fim do período.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="referencial">
+  <div class="wrap ref">
+    <div>
+      <h2>A nota vem dos domínios, não das atitudes</h2>
+      <p class="intro" style="margin-bottom:18px">O VISTO segue o referencial de avaliação e classificação do agrupamento.</p>
+      <p>A classificação resulta dos elementos de avaliação — fichas, testes, trabalhos, projetos, apresentações, observação
+        direta — organizados pelos domínios da disciplina, cada um com o seu peso. Dentro de cada elemento, os critérios
+        (conhecimento, consistência, comunicação, consciência e criatividade) têm percentagens que se reajustam sozinhas.</p>
+      <p>As atitudes registadas aula a aula continuam a ser importantes, mas entram como informação formativa: aparecem na
+        síntese e no perfil do aluno, sem mudar a nota.</p>
+      <p>Alunos transferidos deixam de ter nota a partir da data da transferência. As medidas de suporte, o delegado e o
+        subdelegado ficam assinalados na fotografia.</p>
+    </div>
+    <div class="escala">
+      <h3>Escala dos níveis</h3>
+      <ol>
+        <li><span class="q" style="background:var(--n5)"></span>Muito Bom<span class="v">90–100 % · 18–20</span></li>
+        <li><span class="q" style="background:var(--n4)"></span>Bom<span class="v">70–89 % · 14–17</span></li>
+        <li><span class="q" style="background:var(--n3)"></span>Suficiente<span class="v">50–69 % · 10–13</span></li>
+        <li><span class="q" style="background:var(--n2)"></span>Insuficiente<span class="v">20–49 % · 4–9</span></li>
+        <li><span class="q" style="background:var(--n1)"></span>Muito Insuficiente<span class="v">0–19 % · 0–3</span></li>
+      </ol>
+      <p class="rodape">No ensino básico, níveis de 1 a 5. No profissional e no secundário, valores de 0 a 20, também em cada critério.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="descarregar">
+  <div class="wrap">
+    <h2>Descarregar</h2>
+    <p class="intro">Sempre a versão mais recente. Depois de instalado, o programa atualiza-se sozinho ao abrir e de 6 em 6 horas, sem mexer nos seus dados.</p>
+    <div class="descargas">
+      <a class="descarga" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf_Setup.exe">
+        <img src="icone_pf.png" alt="">
+        <span><b>VISTO Pf para Windows</b><small id="t-VISTO_Pf_Setup.exe">Instalador</small></span>
+      </a>
+      <a class="descarga" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Ag_Setup.exe">
+        <img src="icone_ag.png" alt="">
+        <span><b>VISTO Ag para Windows</b><small id="t-VISTO_Ag_Setup.exe">Instalador</small></span>
+      </a>
+      <a class="descarga" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Pf.apk">
+        <span class="tel" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#1f2f5c" stroke-width="2"/><path d="M10.5 18h3" stroke="#1f2f5c" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span><b>App Android do VISTO Pf</b><small id="t-VISTO_Pf.apk">Liga-se ao seu computador</small></span>
+      </a>
+      <a class="descarga" href="https://github.com/jokerlink1/visto-releases/releases/latest/download/VISTO_Ag.apk">
+        <span class="tel" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#1f2f5c" stroke-width="2"/><path d="M10.5 18h3" stroke="#1f2f5c" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span><b>App Android do VISTO Ag</b><small id="t-VISTO_Ag.apk">Entra com a sua conta</small></span>
+      </a>
+    </div>
+    <ol class="passos">
+      <li><b>Instalar</b><span>Execute o instalador. Se o Windows disser que o programa não é reconhecido, escolha «Mais informações» e «Executar mesmo assim».</span></li>
+      <li><b>Ativar a licença</b><span>Em Definições, Dados, Licença, cole a chave que recebeu. Sem chave, o VISTO Pf funciona 30 dias.</span></li>
+      <li><b>Ligar o telemóvel</b><span>Em Definições, Telemóvel, leia o código QR com o telemóvel, instale a app e escreva o PIN.</span></li>
+    </ol>
+    <details class="novidades" id="novidades">
+      <summary>Novidades da versão mais recente</summary>
+      <p id="notas">—</p>
+    </details>
+  </div>
+</section>
+
+<section class="bloco" id="seguranca">
+  <div class="wrap">
+    <h2>Os dados dos alunos são da escola</h2>
+    <p class="intro">O VISTO foi desenhado para os proteger.</p>
+    <ul class="garantias">
+      <li>Cada professor vê apenas os seus dados; a direção gere as contas sem ver avaliações nem nomes de alunos.</li>
+      <li>Palavras-passe guardadas com PBKDF2 e bloqueio de tentativas; ligações por HTTPS.</li>
+      <li>As atualizações são confirmadas (SHA-256) antes de serem instaladas, e os certificados são verificados pelo Windows.</li>
+      <li>A app do telemóvel liga-se com PIN; fora da escola usa um túnel seguro.</li>
+      <li>O apoio técnico a um colega fica registado e o colega é avisado.</li>
+      <li>Antes de qualquer mudança grande, o programa guarda uma cópia dos dados. Nada é apagado por falta de licença.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="bloco perguntas" id="perguntas">
+  <div class="wrap">
+    <h2 style="margin-bottom:28px">Perguntas frequentes</h2>
+    <details><summary>Preciso de Internet?</summary>
+      <p>Não para trabalhar. O VISTO grava tudo no computador; a Internet só é usada para as atualizações, para confirmar a licença de vez em quando e, se quiser, para a app do telemóvel fora da escola.</p></details>
+    <details><summary>As atitudes contam para a nota?</summary>
+      <p>Não. Seguindo o referencial, a nota vem dos elementos de avaliação organizados por domínios. As atitudes são informação formativa: aparecem na síntese e no perfil do aluno.</p></details>
+    <details><summary>Funciona com cursos profissionais?</summary>
+      <p>Sim: módulos, UFCD e UC, escala de 0 a 20, autoavaliação no fim de cada módulo, aulas não dadas com reposição e antecipação, e aviso das aulas que faltam até à data limite.</p></details>
+    <details><summary>Posso usar os domínios do meu grupo disciplinar?</summary>
+      <p>Sim. Em Critérios da disciplina definem-se os domínios, os pesos, os subdomínios e os descritores dos critérios. Podem exportar-se e importar-se para partilhar com os colegas.</p></details>
+    <details><summary>Posso experimentar antes de comprar?</summary>
+      <p>Sim. O VISTO Pf funciona 30 dias sem chave. Depois, sem licença, abre em modo de consulta: vê, imprime e exporta os seus dados, mas não grava alterações.</p></details>
+    <details><summary>Como obtenho uma licença ou o VISTO Ag para o meu agrupamento?</summary>
+      <p id="contacto">Contacte o autor do VISTO.</p></details>
+    <details><summary>O código do programa está disponível?</summary>
+      <p>Não. Esta página distribui apenas os instaladores e as apps.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>VISTO — avaliação em sala de aula, da aula à nota.</span>
+    <span id="rodape-versao"></span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const REPO = "jokerlink1/visto-releases";
+const CONTACTO = "";        // ex.: "licencas@exemplo.pt"
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+// --- demonstração (valores inventados): domínios com peso, elementos com nível 1–5
+const DOM = [
+  {nome: "Conhecimentos, conceitos e procedimentos", peso: 20, el: [["Ficha 1 — Segurança na Internet", 4], ["Ficha 2 — Pesquisar e citar fontes", 3]]},
+  {nome: "Trabalho prático, experimental e de projeto", peso: 60, el: [["Trabalho de grupo — cartaz digital", 4], ["Observação direta — aula 9", 5]]},
+  {nome: "Comunicação e cidadania", peso: 20, el: [["Apresentação do trabalho", 3]]}
+];
+const MENCAO = ["", "Muito Insuficiente", "Insuficiente", "Suficiente", "Bom", "Muito Bom"];
+const COR = ["", "var(--n1)", "var(--n2)", "var(--n3)", "var(--n4)", "var(--n5)"];
+const pct = n => (n - 1) * 25;
+const nivel = p => { p = Math.round(p); return p < 20 ? 1 : p < 50 ? 2 : p < 70 ? 3 : p < 90 ? 4 : 5; };
+const caixa = document.getElementById("dominios");
+function desenhar(){
+  caixa.innerHTML = DOM.map((d, i) => {
+    const m = d.el.reduce((s, e) => s + pct(e[1]), 0) / d.el.length;
+    return `<div class="dom"><div class="cab"><b>${esc(d.nome)}</b><span>${d.peso} % · média ${Math.round(m)} %</span></div>` +
+      d.el.map((e, j) => `<div class="elem"><span class="nome">${esc(e[0])}</span><span class="niveis" role="group" aria-label="${esc(e[0])}">` +
+        [1, 2, 3, 4, 5].map(n => `<button type="button" data-d="${i}" data-e="${j}" data-n="${n}" aria-pressed="${e[1] === n}" aria-label="nível ${n}, ${MENCAO[n]}">${n}</button>`).join("") +
+        `</span></div>`).join("") + `</div>`;
+  }).join("");
+  const medias = DOM.map(d => d.el.reduce((s, e) => s + pct(e[1]), 0) / d.el.length);
+  const total = DOM.reduce((s, d, i) => s + d.peso * medias[i], 0) / DOM.reduce((s, d) => s + d.peso, 0);
+  const n = nivel(total);
+  document.getElementById("conta").innerHTML = DOM.map((d, i) => `${d.peso} % × ${Math.round(medias[i])} %`).join(" + ") + `<br>= <b>${Math.round(total)} %</b>`;
+  const c = document.getElementById("circulo");
+  c.textContent = n; c.style.borderColor = COR[n]; c.style.color = COR[n];
+  document.getElementById("mencao").textContent = MENCAO[n];
+}
+caixa.addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-n]");
+  if (!b) return;
+  DOM[+b.dataset.d].el[+b.dataset.e][1] = +b.dataset.n;
+  desenhar();
+  const v = document.getElementById("visto");
+  v.classList.remove("marca-nova"); void v.offsetWidth; v.classList.add("marca-nova");
+  const igual = caixa.querySelector(`button[data-d="${b.dataset.d}"][data-e="${b.dataset.e}"][data-n="${b.dataset.n}"]`);
+  if (igual) igual.focus();
+});
+desenhar();
+
+if (CONTACTO) document.getElementById("contacto").innerHTML = `Escreva para <a href="mailto:${esc(CONTACTO)}">${esc(CONTACTO)}</a>.`;
+
+// --- versão mais recente (API pública do GitHub)
+const mb = n => (n / 1048576).toFixed(n > 10485760 ? 0 : 1).replace(".", ",") + " MB";
+fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {headers: {"Accept": "application/vnd.github+json"}})
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(j => {
+    const d = new Date(j.published_at).toLocaleDateString("pt-PT", {day: "numeric", month: "long", year: "numeric"});
+    document.getElementById("versao").textContent = `${j.name || j.tag_name}, publicada a ${d}`;
+    document.getElementById("rodape-versao").textContent = j.name || j.tag_name;
+    for (const a of j.assets || []){
+      const el = document.getElementById("t-" + a.name);
+      if (el) el.textContent += ", " + mb(a.size);
+    }
+    if (j.body) document.getElementById("notas").textContent = j.body;
+  })
+  .catch(() => {
+    document.getElementById("versao").textContent = "A versão mais recente está na página de Releases do GitHub.";
+    document.getElementById("novidades").style.display = "none";
+  });
+</script>
+</body>
+</html>
